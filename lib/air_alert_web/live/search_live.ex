@@ -5,7 +5,7 @@ defmodule AirAlertWeb.SearchLive do
   def mount(_params, _session, socket) do
     AirAlertWeb.Search.start()
 
-    {:ok, assign(socket, query: "", search_results: [], aqi: "–", forecasts: [], selected_location: "")}
+    {:ok, assign(socket, query: "", search_results: [], loading: false)}
   end
 
   @impl true
@@ -14,16 +14,24 @@ defmodule AirAlertWeb.SearchLive do
     <section>
       <h2>Search by location</h2>
 
-      <form phx-change ="search-locations" phx-submit ="search-locations">
+      <form phx-submit="search-locations">
         <input
           type="text"
           name="q"
           value="<%= @query %>"
-          placeholder="Search for a location"
+          placeholder="Dublin"
           list="results"
           autocomplete="off"
-          phx-debounce="1000"/>
+          <%= if @loading, do: "readonly" %>/>
+
+          <button <%= if @loading, do: "disabled" %>><%= if @loading, do: "Searching...", else: "Search" %></button>
       </form>
+
+      <%= if @loading do %>
+        <div class="loader">
+          Loading...
+        </div>
+      <% end %>
 
       <ul id="search_results">
         <%= for %{"station" => %{"name" => name, "url" => url}} <- @search_results do %>
@@ -38,11 +46,31 @@ defmodule AirAlertWeb.SearchLive do
 
   @impl true
   def handle_event("search-locations", %{"q" => query}, socket) do
-    {:noreply,
-     assign(
-       socket,
-       search_results: AirAlertWeb.Search.get!(query).body[:data],
-       query: query
-     )}
+    send(self(), {:run_location_search, query})
+
+    socket =
+      assign(socket,
+        query: query,
+        search_results: [],
+        loading: true
+      )
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info({:run_location_search, query}, socket) do
+    case AirAlertWeb.Search.get!(query).body[:data] do
+      [] ->
+        socket =
+          socket
+          |> put_flash(:info, "No locations matching \"#{query}\"")
+          |> assign(stores: [], loading: false)
+
+        {:noreply, socket}
+
+      results ->
+        {:noreply, assign(socket, search_results: results, loading: false)}
+    end
   end
 end

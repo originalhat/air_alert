@@ -9,8 +9,6 @@ defmodule AirAlertWeb.FeedLive do
       AirAlertWeb.Feed.get!(url).body[:data]
 
     {:ok, assign(socket, name: name, aqi: aqi, forecasts: pm25_forecast |> Enum.take(-3))}
-
-    # {:ok, assign(socket, name: "", aqi: "", forecasts: [])}
   end
 
   @impl true

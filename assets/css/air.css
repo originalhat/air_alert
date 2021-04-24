@@ -1,0 +1,31 @@
+.results {
+  display: flex;
+}
+
+.aqi {
+  background-color: lavender;
+  border-radius: 2px;
+  border: 1px solid;
+  display: inline-block;
+  padding: 16px;
+  text-align: center;
+  width: 120px;
+  margin-right: 16px;
+}
+
+.aqi__value {
+  font-size: 36px;
+  font-weight: 800;
+}
+
+.forecasts {
+  display: flex;
+}
+
+.forecast {
+  background-color: lavender;
+  border-radius: 2px;
+  border: 1px solid;
+  padding: 16px;
+  margin-right: 8px;
+}

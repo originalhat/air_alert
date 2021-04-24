@@ -3,37 +3,83 @@ defmodule AirAlertWeb.PageLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, query: "", results: %{})}
+    AirAlertWeb.Search.start()
+    AirAlertWeb.Feed.start()
+
+    {:ok, assign(socket, query: "", search_results: [], aqi: "–", forecasts: [], selected_location: "")}
   end
 
   @impl true
-  def handle_event("suggest", %{"q" => query}, socket) do
-    {:noreply, assign(socket, results: search(query), query: query)}
+  def render(assigns) do
+    ~L"""
+    <section>
+      <h2>Search by location</h2>
+
+      <form phx-change ="search-locations" phx-submit ="search-locations">
+        <input
+          type="text"
+          name="q"
+          value="<%= @query %>"
+          placeholder="Search for a location"
+          list="results"
+          autocomplete="off"
+          phx-debounce="1000"/>
+      </form>
+
+      <ul id="search_results">
+        <%= for %{"station" => %{"name" => name, "url" => url}} <- @search_results do %>
+          <li><a href="#" phx-click="select-location" phx-value-url="<%= url %>" phx-value-name="<%= name %>"><%= name %></a></li>
+        <% end %>
+      </ul>
+    </section>
+
+    <%= if String.length(@selected_location) > 0 do %>
+      <section>
+        <h2>AQI Results for <strong><%= @selected_location %><strong></h2>
+
+        <div class="results">
+          <span class="aqi">
+            <div>TODAY</div>
+            <div class="aqi__value">
+              <%= @aqi %>
+            </div>
+          </span>
+
+          <span class="forecasts">
+            <%= for forecast <- @forecasts do %>
+              <span class="forecast">
+                <div><%= forecast["day"]%></div>
+                <div class="aqi__value"><%= forecast["avg"]%></div>
+              </span>
+            <% end %>
+          </div>
+        </div>
+      </section>
+    <% end %>
+    """
   end
 
   @impl true
-  def handle_event("search", %{"q" => query}, socket) do
-    case search(query) do
-      %{^query => vsn} ->
-        {:noreply, redirect(socket, external: "https://hexdocs.pm/#{query}/#{vsn}")}
-
-      _ ->
-        {:noreply,
-         socket
-         |> put_flash(:error, "No dependencies found matching \"#{query}\"")
-         |> assign(results: %{}, query: query)}
-    end
+  def handle_event("search-locations", %{"q" => query}, socket) do
+    {:noreply,
+     assign(
+       socket,
+       search_results: AirAlertWeb.Search.get!(query).body[:data],
+       query: query
+     )}
   end
 
-  defp search(query) do
-    if not AirAlertWeb.Endpoint.config(:code_reloader) do
-      raise "action disabled when not in development"
-    end
+  @impl true
+  def handle_event("select-location", %{"url" => url, "name" => name}, socket) do
+    %{"aqi" => aqi, "forecast" => %{"daily" => %{"pm25" => pm25_forecast}}} =
+      AirAlertWeb.Feed.get!(url).body[:data]
 
-    for {app, desc, vsn} <- Application.started_applications(),
-        app = to_string(app),
-        String.starts_with?(app, query) and not List.starts_with?(desc, ~c"ERTS"),
-        into: %{},
-        do: {app, vsn}
+    {:noreply,
+     assign(
+       socket,
+       aqi: aqi,
+       forecasts: pm25_forecast |> Enum.take(-3),
+       selected_location: name
+     )}
   end
 end

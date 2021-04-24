@@ -41,7 +41,7 @@ defmodule AirAlertWeb.FeedLive do
     <section class="alerts">
       <h2>Configure alerts</h2>
 
-      <p>Receive SMS alerts when the AQI exceeds safe levels in <strong><%= @name %></strong>.</p>
+      <p>Receive SMS alerts when the AQI exceeds safe levels for <strong><%= @name %></strong>.</p>
 
       <form phx-submit ="configure-alert">
         <label>AQI threshold<label>

@@ -1,4 +1,4 @@
-defmodule AirAlertWeb.PageLiveTest do
+defmodule AirAlertWeb.SearchLiveTest do
   use AirAlertWeb.ConnCase
 
   import Phoenix.LiveViewTest

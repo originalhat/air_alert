@@ -17,7 +17,8 @@ defmodule AirAlertWeb.Router do
   scope "/", AirAlertWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", SearchLive, :index
+    live "/feed", FeedLive, :index
   end
 
   # Other scopes may use custom stacks.

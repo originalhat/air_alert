@@ -21,8 +21,7 @@ defmodule AirAlertWeb.SearchLive do
           value="<%= @query %>"
           placeholder="Dublin"
           list="results"
-          autocomplete="off"
-          <%= if @loading, do: "readonly" %>/>
+          autocomplete="off"/>
 
           <button <%= if @loading, do: "disabled" %>><%= if @loading, do: "Searching...", else: "Search" %></button>
       </form>
@@ -46,7 +45,7 @@ defmodule AirAlertWeb.SearchLive do
 
   @impl true
   def handle_event("search-locations", %{"q" => query}, socket) do
-    send(self(), {:run_location_search, query})
+    send(self(), {:run_search_locations, query})
 
     socket =
       assign(socket,
@@ -59,7 +58,7 @@ defmodule AirAlertWeb.SearchLive do
   end
 
   @impl true
-  def handle_info({:run_location_search, query}, socket) do
+  def handle_info({:run_search_locations, query}, socket) do
     case AirAlertWeb.Search.get!(query).body[:data] do
       [] ->
         socket =

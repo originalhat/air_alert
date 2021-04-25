@@ -41,7 +41,7 @@ defmodule AirAlertWeb.FeedLive do
 
       <p>Receive SMS alerts when the AQI exceeds safe levels for <strong><%= @name %></strong>.</p>
 
-      <form phx-submit ="configure-alert">
+      <form phx-submit="configure-alert" phx-change="validate-alert">
         <label>AQI threshold<label>
         <select name="aqi">
           <option value="good">Good (0-50)</option>
@@ -59,5 +59,11 @@ defmodule AirAlertWeb.FeedLive do
       </form>
     </section>
     """
+  end
+
+  @impl true
+  def handle_event("validate-alert", params, socket) do
+    IO.inspect(params)
+    {:noreply, socket}
   end
 end

@@ -19,6 +19,7 @@ defmodule AirAlert.Subscription do
     |> cast(attrs, [:active, :threshold, :phone_number])
     |> validate_required([:threshold, :phone_number])
     |> validate_format(:phone_number, ~r/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/, message: "Invalid phone number format")
+    |> unique_constraint(:phone_number)
   end
 
   def create_subscription(attrs \\ %{}) do

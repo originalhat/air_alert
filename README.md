@@ -13,6 +13,7 @@ AQI alerts based on location. Supported by [https://aqicn.org](https://aqicn.org
 - [ ] SMS delayed jobs ([oban](https://github.com/sorentwo/oban) / GenServer)
 - [ ] Telemetry
 - [ ] CSS Modules? What's the closest thing in Phoenixland like this?
+- [ ] SMS unsubscribe
 
 ## Usage
 

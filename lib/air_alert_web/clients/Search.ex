@@ -2,7 +2,7 @@ defmodule AirAlertWeb.Search do
   use HTTPoison.Base
 
   def process_request_url(keyword) do
-    "https://api.waqi.info/search/?keyword=" <> keyword <> "&token=fb8c0e42445a025635a65b449d7fc929f2d94d10"
+    "https://api.waqi.info/search/?keyword=" <> keyword <> "&token=#{Application.get_env(:air_alert, AirAlert.AQI)[:token]}"
   end
 
   def process_response_body(body) do

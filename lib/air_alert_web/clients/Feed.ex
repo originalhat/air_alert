@@ -2,7 +2,7 @@ defmodule AirAlertWeb.Feed do
   use HTTPoison.Base
 
   def process_request_url(location) do
-    "https://api.waqi.info/feed/" <> location <> "/?token=fb8c0e42445a025635a65b449d7fc929f2d94d10"
+    "https://api.waqi.info/feed/" <> location <> "/?token=#{Application.get_env(:air_alert, AirAlert.AQI)[:token]}"
   end
 
   def process_response_body(body) do

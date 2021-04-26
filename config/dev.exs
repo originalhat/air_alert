@@ -1,5 +1,12 @@
 use Mix.Config
 
+config :air_alert, AirAlert.AQI,
+  token: System.get_env("AQI_TOKEN")
+
+config :air_alert, AirAlert.Twilio,
+  account_sid: System.get_env("TWILIO_ACCOUNT_SID"),
+  auth_token: System.get_env("TWILIO_AUTH_TOKEN")
+
 # Configure your database
 config :air_alert, AirAlert.Repo,
   username: "postgres",

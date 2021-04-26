@@ -2,12 +2,15 @@
 
 AQI alerts based on location. Supported by [https://aqicn.org](https://aqicn.org).
 
+![search](/search.png)
+![results_and_alert](/results_and_alert.png)
+
 ## TODO
 
 - [ ] Typedefs
 - [ ] E2E Testing
-- [ ] Visual diff testing (what're the options in Phoenixland)
-- [ ] SMS delayed jobs ([oban](https://github.com/sorentwo/oban))
+- [ ] Visual diff testing (what're the options in Phoenixland?)
+- [ ] SMS delayed jobs ([oban](https://github.com/sorentwo/oban) / GenServer)
 
 To start your Phoenix server:
 

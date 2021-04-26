@@ -11,6 +11,10 @@ AQI alerts based on location. Supported by [https://aqicn.org](https://aqicn.org
 - [ ] E2E Testing
 - [ ] Visual diff testing (what're the options in Phoenixland?)
 - [ ] SMS delayed jobs ([oban](https://github.com/sorentwo/oban) / GenServer)
+- [ ] Telemetry
+- [ ] CSS Modules? What's the closest thing in Phoenixland like this?
+
+## Usage
 
 To start your Phoenix server:
 

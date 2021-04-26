@@ -14,6 +14,9 @@ AQI alerts based on location. Supported by [https://aqicn.org](https://aqicn.org
 - [ ] Telemetry
 - [ ] CSS Modules? What's the closest thing in Phoenixland like this?
 - [ ] SMS unsubscribe
+- [ ] Maps!
+- [ ] Colorize AQI
+- [ ] Affiliate link
 
 ## Usage
 

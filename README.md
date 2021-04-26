@@ -1,5 +1,14 @@
 # AirAlert
 
+AQI alerts based on location. Supported by [https://aqicn.org](https://aqicn.org).
+
+## TODO
+
+- [ ] Typedefs
+- [ ] E2E Testing
+- [ ] Visual diff testing (what're the options in Phoenixland)
+- [ ] SMS delayed jobs ([oban](https://github.com/sorentwo/oban))
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
@@ -10,7 +19,6 @@ To start your Phoenix server:
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
 ## Learn more
 
   * Official website: https://www.phoenixframework.org/

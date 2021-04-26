@@ -17,6 +17,7 @@ AQI alerts based on location. Supported by [https://aqicn.org](https://aqicn.org
 - [ ] Maps!
 - [ ] Colorize AQI
 - [ ] Affiliate link
+- [ ] Better error handling
 
 ## Usage
 

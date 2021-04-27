@@ -7,6 +7,7 @@ AQI alerts based on location. Supported by [https://aqicn.org](https://aqicn.org
 
 ## TODO
 
+- [ ] Migration: add slug to subscription
 - [ ] Typedefs
 - [ ] E2E Testing
 - [ ] Visual diff testing (what're the options in Phoenixland?)
